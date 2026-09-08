@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public float velocidade = 5f;
+    private int contadorBolinhas = 0;
 
     void Update()
     {
@@ -21,5 +22,22 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movimento = new Vector3(moveX, moveY, 0).normalized;
         transform.position += movimento * velocidade * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if  (collision.CompareTag("coletavel"))
+        {
+            Destroy(collision.gameObject);
+            contadorBolinhas++;
+
+            Debug.Log("Bolinahs coletadas: " + contadorBolinhas + "/10");
+
+            if (contadorBolinhas >= 10)
+            {
+                Debug.Log("Parabéns, você coletou todas as bolinhas!");
+            }
+        }
+        
     }
 }
